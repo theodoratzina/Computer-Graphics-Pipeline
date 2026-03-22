@@ -4,10 +4,9 @@ from shading import f_shading, g_shading, t_shading
 
 def render_img(faces, vertices, vcolors, uvs, depth, shading, texImg=None):
     """
-    Render a 2D image of a 3D object by filling K triangles using the
-    specified shading method. Triangles are painted back-to-front (painter's
-    algorithm) based on their mean vertex depth, so closer triangles correctly
-    overlap farther ones.
+    Render a 2D image of a 3D object by filling K triangles using the specified 
+    shading method. Triangles are painted back-to-front (painter's algorithm) based 
+    on their mean vertex depth, so closer triangles correctly overlap farther ones.
 
     Args:
         faces    : (K, 3) int array, vertex indices of each triangle

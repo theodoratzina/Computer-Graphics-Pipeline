@@ -151,7 +151,7 @@ def g_shading(img, vertices, vcolors):
         p_B = np.array([x_B, y])
  
         # Clamp to canvas bounds
-        x_start = max(0, int(np.ceil(x_A)))   # Ceiling to start filling from the first pixel inside the boundary
+        x_start = max(0, int(np.ceil(x_A)))
         x_end   = min(updated_img.shape[1] - 1, int(x_B))
 
         if x_start > x_end:
@@ -257,7 +257,7 @@ def t_shading(img, vertices, uv, textImg):
         p_B = np.array([x_B, y])
  
         # Clamp to canvas bounds
-        x_start = max(0, int(np.ceil(x_A)))  # Ceiling to start filling from the first pixel inside the boundary
+        x_start = max(0, int(np.ceil(x_A)))
         x_end   = min(updated_img.shape[1] - 1, int(x_B))
 
         if x_start > x_end:
