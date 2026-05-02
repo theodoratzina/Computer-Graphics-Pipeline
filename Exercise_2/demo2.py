@@ -54,8 +54,8 @@ res_h, res_w = 512, 512
 out_dir = "demo2_frames"
 os.makedirs(out_dir, exist_ok=True)
 
-print(f"[demo2] {n_frames} frames | focal={focal} | plane={plane_h}x{plane_w}")
-print(f"[demo2] orbit radius={radius}  eye_height={eye_height}")
+print(f"[demo2] {n_frames} frames | focal = {focal} | plane = {plane_h} x {plane_w}")
+print(f"[demo2] orbit radius = {radius} | eye_height = {eye_height}")
 
 # 2. Render loop
 for frame in range(n_frames):
@@ -90,6 +90,6 @@ for frame in range(n_frames):
     # Save frame
     fname = os.path.join(out_dir, f"demo2_frame_{frame:02d}.png")
     plt.imsave(fname, np.clip(img, 0.0, 1.0))
-    print(f"  frame {frame + 1:2d}/{n_frames}  eye={np.round(eye,2)}  -> {fname}")
+    print(f"frame {frame + 1:2d}/{n_frames}: eye = {np.round(eye,2)}  -> {fname}")
 
 print(f"\n[demo2] Done. Frames saved in '{out_dir}/'")

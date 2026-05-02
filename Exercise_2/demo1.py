@@ -16,8 +16,8 @@ Output: 25 PNG frames saved in the folder 'demo1_frames/'
 # 1. Load scene data
 data = np.load("data.npy", allow_pickle=True).item()
 
-# Vertex positions: stored as (3, N) — transpose to (N, 3) for render_object
-v_pos = data["v_pos"].T
+# Vertex positions: stored as (3, N)
+v_pos = data["v_pos"]
 
 # UV texture coordinates (N, 2)
 v_uvs = data["v_uvs"]
@@ -66,13 +66,13 @@ for frame in range(n_frames):
     tr = Trafo()
     tr.rotate(y_axis, angle, rot_center)
 
-    # Rotate vertices: xform_pnts expects (3, N), returns (3, N)
-    v_pos_rot = tr.xform_pnts(v_pos.T).T
+    # Rotate vertices: xform_pnts returns (3, N) — transpose to (N, 3) for render_object
+    v_pos_rot = tr.xform_pnts(v_pos).T
 
     # Render
     img = render_object(
         v_pos = v_pos_rot,
-        v_clr = np.zeros((v_pos.shape[0], 3)),   # unused (texture mode)
+        v_clr = np.zeros((v_pos_rot.shape[0], 3)),   # unused (texture mode)
         t_pos_idx = t_pos_idx,
         plane_h = plane_h,
         plane_w = plane_w,
