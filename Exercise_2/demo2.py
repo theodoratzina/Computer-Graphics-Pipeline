@@ -60,8 +60,8 @@ print(f"[demo2] orbit radius = {radius} | eye_height = {eye_height}")
 # 2. Render loop
 for frame in range(n_frames):
 
-    # Clockwise orbit angle (viewed from +Y)
-    angle = 2.0 * np.pi * frame / n_frames
+    # Negative angle for clockwise rotation (right-hand rule)
+    angle = - 2.0 * np.pi * frame / n_frames
 
     # Camera position on the orbit circle
     eye = np.array([
@@ -70,7 +70,7 @@ for frame in range(n_frames):
         radius * np.cos(angle)    # Z
     ])
 
-    # Render (v_pos unchanged)
+    # Render
     img = render_object(
         v_pos = v_pos,
         v_clr = np.zeros((v_pos.shape[0], 3)),
@@ -90,6 +90,6 @@ for frame in range(n_frames):
     # Save frame
     fname = os.path.join(out_dir, f"demo2_frame_{frame:02d}.png")
     plt.imsave(fname, np.clip(img, 0.0, 1.0))
-    print(f"frame {frame + 1:2d}/{n_frames}: eye = {np.round(eye,2)}  -> {fname}")
+    print(f"frame {frame + 1:2d}/{n_frames}: eye = {np.round(eye,2)} -> {fname}")
 
 print(f"\n[demo2] Done. Frames saved in '{out_dir}/'")

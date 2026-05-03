@@ -59,8 +59,8 @@ print(f"[demo1] eye = {eye} | target = {target}")
 # 2. Render loop
 for frame in range(n_frames):
 
-    # Full rotation in n_frames steps → angle per frame = 2pi / n_frames
-    angle = 2.0 * np.pi * frame / n_frames   # clockwise about +Y
+    # Positive angle is passed to rotate(), which internally applies CW rotation
+    angle = 2.0 * np.pi * frame / n_frames
 
     # Fresh Trafo each frame — avoids accumulation across frames
     tr = Trafo()

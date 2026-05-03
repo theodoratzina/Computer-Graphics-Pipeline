@@ -42,7 +42,8 @@ class Trafo:
         # Normalise axis
         n = axis / np.linalg.norm(axis)
 
-        c, s = np.cos(angle), np.sin(angle)
+        # Negate angle to produce clockwise rotation (right-hand rule)
+        c, s = np.cos(-angle), np.sin(-angle)
 
         # Skew-symmetric cross-product matrix of n
         K = np.array([
