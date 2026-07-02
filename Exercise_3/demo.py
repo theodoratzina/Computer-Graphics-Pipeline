@@ -5,6 +5,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from PIL import Image
 from renderer import render_object
+from shading import calc_normals
+from camera import lookat, perspective_project
 
 """
 Demo for hw3
@@ -56,7 +58,7 @@ l_amb = np.asarray(data["l_amb"]).flatten()
 # 2. Texture image: RGB float in [0, 1], flipped vertically 
 #    so it aligns with the v texture axis
 tex = np.array(Image.open("loony-repeat.png").convert("RGB")).astype(float) / 255.0
-tex = np.flipud(tex)
+tex = np.flipud(np.fliplr(tex))
 
 # 3. Output directory
 out_dir = "renders"
@@ -64,6 +66,61 @@ os.makedirs(out_dir, exist_ok=True)
 
 print(f"[demo] res = {res_h}x{res_w} | focal = {focal} | plane = {plane_h}x{plane_w}")
 print(f"[demo] {len(l_pos)} point lights | ka={ka} kd={kd} ks={ks} n={n}")
+
+
+def print_diagnostics():
+    """Print quantitative sanity checks that justify the visual results."""
+    print("\n" + "=" * 62)
+    print("SCENE DIAGNOSTICS")
+    print("=" * 62)
+ 
+    # Geometry / npy consistency
+    r = np.linalg.norm(v_pos, axis=0)
+    print("\n[geometry]")
+    print(f"  vertices Nv   : {v_pos.shape[1]}   triangles NT: {t_pos_idx.shape[0]}")
+    print(f"  vertex radius : mean={r.mean():.4f} std={r.std():.5f}  (unit sphere at origin)")
+    print(f"  uv range      : [{v_uvs.min():.2f}, {v_uvs.max():.2f}]  (normalized)")
+    print(f"  camera eye={eye}  target={target}  up={up}")
+ 
+    # Normals: outward & unit
+    nrm = calc_normals(v_pos, t_pos_idx)             # (3, Nv)
+    unit = np.allclose(np.linalg.norm(nrm, axis=0), 1.0, atol=1e-6)
+    radial = v_pos / np.linalg.norm(v_pos, axis=0)
+    outward = np.einsum('ij,ij->j', nrm, radial)
+    print("\n[normals]")
+    print(f"  all unit length  : {unit}")
+    print(f"  outward fraction : {100*np.mean(outward > 0):.1f}% (dot with radial dir, mean={outward.mean():.4f})")
+ 
+    # Which hemisphere is visible (painter's order)
+    R, t = lookat(eye, up, target)
+    _, depth = perspective_project(v_pos, focal, R, t)
+    N = nrm.T
+    P = v_pos.T
+    tri_depth = np.mean(depth[t_pos_idx], axis=1)
+    order = np.argsort(tri_depth)[::-1]   # far first, near last (on top)
+    tri_z = np.mean(v_pos[2][t_pos_idx], axis=1)
+    print("\n[visibility]  (painter's algorithm draws near side last = on top)")
+    print(f"  triangles on top : mean world-z = {tri_z[order[-500:]].mean():+.3f} (near side, z<0 -> visible)")
+    print(f"  triangles behind : mean world-z = {tri_z[order[:500]].mean():+.3f} (far side, hidden)")
+ 
+    # Per-light diffuse energy delivered to the visible hemisphere
+    view = eye[None, :] - P
+    view = view / np.linalg.norm(view, axis=1, keepdims=True)
+    visible = np.einsum('ij,ij->i', N, view) > 0
+    print("\n[light contribution to the visible hemisphere]")
+    print(f"  visible vertices : {visible.sum()} / {len(P)}")
+    names = ['light0', 'light1', 'light2']
+    for i, (lp, li) in enumerate(zip(l_pos, l_int)):
+        L = np.asarray(lp)[None, :] - P
+        L = L / np.linalg.norm(L, axis=1, keepdims=True)
+        ndotl = np.clip(np.einsum('ij,ij->i', N, L), 0, None)
+        lit_vis = (ndotl > 0) & visible
+        print(f"  {names[i]} pos={np.asarray(lp)} int={np.asarray(li)}: "
+              f"lit&visible={lit_vis.sum():6d}  total N.L={ndotl[lit_vis].sum():8.1f}")
+    print("=" * 62 + "\n")
+ 
+ 
+print_diagnostics()
 
 
 def render_and_save(shader, k_a, k_d, k_s, lp, li, name):

@@ -70,7 +70,7 @@ def render_object(v_pos: np.ndarray, v_uvs: np.ndarray, t_pos_idx: np.ndarray,
     # Step 3: rasterize to pixels, flip y so row 0 is the top
     pix = rasterize(pts_2d, plane_w, plane_h, res_w, res_h)
     px = pix[0]
-    py_img = (res_h - 1) - pix[1]
+    py_img = pix[1]
     verts_px = np.stack([px, py_img], axis=1).astype(int)   # (Nv, 2)
 
     # White canvas
