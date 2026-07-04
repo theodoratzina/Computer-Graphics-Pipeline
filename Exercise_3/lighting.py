@@ -78,7 +78,7 @@ def light(pt: np.ndarray, nrm: np.ndarray, vclr: np.ndarray,
         V = V / v_len
 
     # Ambient term (independent of the point light sources)
-    I = ka * (l_amb[None, :] * C)          # (M, 3)
+    I = ka * (l_amb[None, :] * C)   # (M, 3)
 
     # Normalise the light inputs to (N, 3) so one or many sources work the same
     L_pos = _as_light_array(l_pos)
@@ -106,8 +106,8 @@ def light(pt: np.ndarray, nrm: np.ndarray, vclr: np.ndarray,
         # Specular contribution (classic Phong: reflect L about N).
         # Per the course notes, specular reflects the light-source colour and
         # is not tinted by the surface albedo -> white/coloured highlights.
-        R = 2.0 * ndotl[:, None] * N - L[None, :]      # (M, 3)
-        rdotv = R @ V                                   # (M,)
+        R = 2.0 * ndotl[:, None] * N - L[None, :]   # (M, 3)
+        rdotv = R @ V   # (M,)
         spec_mask = lit & (rdotv > 0.0)
         if np.any(spec_mask):
             spec = ks * (np.clip(rdotv, 0.0, None)[:, None] ** n) * inten[None, :]

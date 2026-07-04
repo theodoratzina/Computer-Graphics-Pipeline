@@ -73,8 +73,8 @@ def render_object(v_pos: np.ndarray, v_uvs: np.ndarray, t_pos_idx: np.ndarray,
     py_img = pix[1]
     verts_px = np.stack([px, py_img], axis=1).astype(int)   # (Nv, 2)
 
-    # White canvas
-    img = np.ones((res_h, res_w, 3), dtype=float)
+    # Black canvas
+    img = np.zeros((res_h, res_w, 3), dtype=float)
 
     # Painter's algorithm: farthest triangles first
     tri_depth = np.mean(depth[faces], axis=1)
@@ -87,7 +87,7 @@ def render_object(v_pos: np.ndarray, v_uvs: np.ndarray, t_pos_idx: np.ndarray,
         f = faces[idx]
         vp = verts_px[f]   # (3, 2) pixel coords
 
-        # step 4: clip — skip triangles with any vertex outside the plane,
+        # Step 4: clip — skip triangles with any vertex outside the plane,
         # or with any vertex at/behind the camera (non-positive depth)
         if (np.any(vp[:, 0] < 0) or np.any(vp[:, 0] >= res_w) or
                 np.any(vp[:, 1] < 0) or np.any(vp[:, 1] >= res_h)):
@@ -99,7 +99,7 @@ def render_object(v_pos: np.ndarray, v_uvs: np.ndarray, t_pos_idx: np.ndarray,
         tri_uv = v_uvs[f]             # (3, 2)
         bcoords = P[f].mean(axis=0)   # (3,) 3-D barycenter
 
-        # step 5: fill with the selected shader
+        # Step 5: fill with the selected shader
         if shader == "phong":
             img = shade_phong(vp, tri_n, tri_uv, tex, eye, ka, kd, ks, n,
                               l_pos, l_int, l_amb, img, bcoords)

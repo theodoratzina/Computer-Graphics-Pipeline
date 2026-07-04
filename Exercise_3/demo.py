@@ -46,6 +46,9 @@ eye = np.asarray(data["cam_pos"]).flatten()   # camera centre in WCS
 up = np.asarray(data["up"]).flatten()
 target = np.asarray(data["target"]).flatten()
 
+# Flip the camera to look at the object from the opposite side
+# eye = -eye
+
 ka = float(data["ka"])
 kd = float(data["kd"])
 ks = float(data["ks"])
