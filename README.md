@@ -112,8 +112,8 @@ Implements physical light interactions and advanced shading models to achieve ph
 *   **Dynamic Animation Engine:** Exercise 2 proves the mathematical stability of the system by generating smooth 25 FPS animations, cleanly rendering both a rotating object and an orbiting camera around a static scene without matrix accumulation drift.
 
 <div align="center">
-  <img width="45%" alt="Gouraud vs Phong Lighting" src="https://github.com/theodoratzina/Computer-Graphics-Pipeline/blob/main/Exercise_3/renders_back/phong_combined_back.png" hspace="2%" />
-  <img width="45%" alt="Texture Mapping" src="https://github.com/theodoratzina/Computer-Graphics-Pipeline/blob/main/Exercise_1/figures/output_texture.png" />
+  <img width="45%" src="https://github.com/theodoratzina/Computer-Graphics-Pipeline/blob/main/Exercise_1/figures/output_texture.png" hspace="2%" />
+  <img width="45%" src="https://github.com/theodoratzina/Computer-Graphics-Pipeline/blob/main/Exercise_3/renders_back/phong_combined_back.png" />
   <br>
 </div>
 
