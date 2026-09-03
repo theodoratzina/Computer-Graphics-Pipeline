@@ -22,38 +22,49 @@ This repository implements a full graphics rendering pipeline without relying on
 
 ```text
 .
-├── Exercise_1/                          # 2D Triangle Rasterization
+├── Exercise_1/
 │   ├── figures/
 │   ├── demo_f.py
 │   ├── demo_g.py
 │   ├── demo_t.py
 │   ├── hw1.npy
+│   ├── hw1_2026.pdf
 │   ├── loony-repeat.png
 │   ├── rendering.py
+│   ├── report_1.pdf
 │   ├── shading.py
-│   ├── utils.py
-│   └── report_1.pdf
+│   └── utils.py
 │
-├── Exercise_2/                          # 3D Projections & Transforms
-│   ├── demo1_frames/                    # Output frames (rotating object)
-│   ├── demo2_frames/                    # Output frames (orbiting camera)
+├── Exercise_2/
+│   ├── demo1_frames/
+│   ├── demo2_frames/
 │   ├── camera.py
 │   ├── data.npy
 │   ├── demo1.py
 │   ├── demo2.py
+│   ├── hw2_2026.pdf
+│   ├── loony-repeat.png
 │   ├── renderer.py
+│   ├── rendering.py
 │   ├── report_2.pdf
-│   └── transforms.py
+│   ├── shading.py
+│   ├── sphere.obj
+│   ├── transforms.py
+│   └── utils.py
 │
-├── Exercise_3/                          # Illumination Models
-│   ├── renders/                         # Output renders per shading method
+├── Exercise_3/
+│   ├── renders/
+│   ├── renders_back/
 │   ├── camera.py
 │   ├── demo.py
 │   ├── hw3.npy
+│   ├── hw3_2026.pdf
 │   ├── lighting.py
+│   ├── loony-repeat.png
 │   ├── renderer.py
 │   ├── report_3.pdf
 │   ├── shading.py
+│   ├── sphere.obj
 │   └── utils.py
 └──
 ```
