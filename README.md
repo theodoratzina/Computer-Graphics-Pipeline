@@ -113,9 +113,8 @@ Implements physical light interactions and advanced shading models to achieve ph
 
 <div align="center">
   <img width="45%" alt="Gouraud vs Phong Lighting" src="ΒΑΛΕ_ΕΔΩ_ΤΟ_LINK_ΑΠΟ_ΤΟ_GITHUB_1" hspace="2%" />
-  <img width="45%" alt="Texture Mapping" src="ΒΑΛΕ_ΕΔΩ_ΤΟ_LINK_ΑΠΟ_ΤΟ_GITHUB_2" />
+  <img width="45%" alt="Texture Mapping" src="https://github.com/theodoratzina/Computer-Graphics-Pipeline/blob/main/Exercise_1/figures/output_texture.png" />
   <br>
-  <p><em>Left: Individual components of the Phong Illumination Model (Ambient, Diffuse, Specular). Right: Fully rendered 3D sphere with texture mapping and lighting.</em></p>
 </div>
 
 ---
